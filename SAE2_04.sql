@@ -1,5 +1,5 @@
 -- TP 2_04
--- Nom:  , Prenom: 
+-- Nom: GNANESWARAN , Prenom: Roshan
 
 -- +------------------+--
 -- * Question 1 :     --
@@ -15,15 +15,16 @@
 -- | etc...
 -- = Reponse question 1.
 
-
-
-
+select pseudout,nomob
+from UTILISATEUR natural join OBJET natural join VENTE 
+where pseudout = "ght1ordi"  and MONTH(finVe) = 2 and YEAR(debutVe) = 2023 and idst=4;
 
 -- +------------------+--
 -- * Question 2 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  La liste des utilisateurs qui ont enchérit sur un objet qu’ils ont eux même mis en vente
+-- La liste des utilisateurs qui ont enchérit sur un objet 
+-- qu’ils ont eux même mis en vente
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -34,12 +35,16 @@
 -- = Reponse question 2.
 
 
+select distinct pseudout
+from UTILISATEUR natural join OBJET natural join VENTE natural join ENCHERIR;
+
 
 -- +------------------+--
 -- * Question 3 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  La liste des utilisateurs qui ont mis en vente des objets mais uniquement des meubles
+-- La liste des utilisateurs qui ont mis en vente des objets 
+-- mais uniquement des meubles
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -48,6 +53,14 @@
 -- +-------------+
 -- | etc...
 -- = Reponse question 3.
+
+select  pseudout
+  from UTILISATEUR natural join OBJET
+ where idCat = 3 and idUt NOT IN (
+    select idUt
+      from UTILISATEUR natural join OBJET
+     where idCat != 3
+ );
 
 
 
@@ -65,7 +78,10 @@
 -- | etc...
 -- = Reponse question 4.
 
-
+select idOb, nomOb,montant
+from OBJET natural join VENTE natural join ENCHERIR
+where YEAR(debutVe) = 2022
+having count(montant) > 15;
 
 -- +------------------+--
 -- * Question 5 :     --
