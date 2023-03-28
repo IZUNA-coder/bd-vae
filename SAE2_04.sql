@@ -87,7 +87,10 @@ having count(montant) > 15;
 -- * Question 5 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Ici NE CREEZ PAS la vue PRIXVENTE mais indiquer simplement la requête qui lui est associée. C'est à dire la requête permettant d'obtenir pour chaque vente validée, l'identifiant de la vente l'identiant de l'acheteur et le prix de la vente.
+--  Ici NE CREEZ PAS la vue PRIXVENTE mais indiquer simplement la requête qui lui 
+-- - est associée. C'est à dire la requête permettant d'obtenir pour 
+-- chaque vente validée, l'identifiant de la vente l'identiant de 
+-- l'acheteur et le prix de la vente.
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -96,6 +99,14 @@ having count(montant) > 15;
 -- +------+------------+----------+
 -- | etc...
 -- = Reponse question 5.
+
+
+select idve, idUt idacheteur, max(montant) montant
+from VENTE natural join ENCHERIR natural join UTILISATEUR 
+where idst=4
+group by idve;
+
+
 
 
 
@@ -112,6 +123,18 @@ having count(montant) > 15;
 -- +------+-------+-----------+
 -- | etc...
 -- = Reponse question 6.
+
+
+CREATE or REPLACE PRIXVENTE as 
+
+select idve, idUt idacheteur, max(montant) montant, dateheure
+from VENTE natural join ENCHERIR natural join UTILISATEUR 
+where idst=4
+group by idve;
+
+
+select MONTH(dateheure)
+from PRIXVENTE
 
 
 
