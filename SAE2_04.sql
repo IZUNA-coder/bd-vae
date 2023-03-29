@@ -125,16 +125,17 @@ group by idve;
 -- = Reponse question 6.
 
 
-CREATE or REPLACE PRIXVENTE as 
 
+CREATE or REPLACE VIEW PRIXVENTE as 
 select idve, idUt idacheteur, max(montant) montant, dateheure
 from VENTE natural join ENCHERIR natural join UTILISATEUR 
 where idst=4
 group by idve;
 
 
-select MONTH(dateheure)
+select MONTH(dateheure) mois, YEAR(dateheure) annee, round(sum(montant*0.05),2) ca
 from PRIXVENTE
+group by MONTH(dateheure), YEAR(dateheure);
 
 
 
@@ -142,7 +143,8 @@ from PRIXVENTE
 -- * Question 7 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Les informations du ou des utilisateurs qui ont mis le plus d’objets en vente
+--  Les informations du ou des utilisateurs qui ont mis le plus d’objets 
+-- en vente
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -152,6 +154,12 @@ from PRIXVENTE
 -- | etc...
 -- = Reponse question 7.
 
+
+select idUt, pseudout, count(idOb) nbob
+from UTILISATEUR natural join OBJET
+group by idUt
+order by nbob desc
+limit 1;
 
 
 -- +------------------+--
@@ -169,6 +177,10 @@ from PRIXVENTE
 -- = Reponse question 8.
 
 
+select idCat, nomCat, count(idOb) nb_objets
+from CATEGORIE natural join OBJET
+group by idCat;
+
 
 -- +------------------+--
 -- * Question 9 :     --
@@ -185,4 +197,7 @@ from PRIXVENTE
 -- = Reponse question 9.
 
 
-
+select idUt, pseudout, sum(montant) total
+from UTILISATEUR natural join OBJET natural join VENTE natural join ENCHERIR
+where idst=4
+group by idUt;
