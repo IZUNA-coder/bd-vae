@@ -107,9 +107,6 @@ where idst=4
 group by idve;
 
 
-
-
-
 -- +------------------+--
 -- * Question 6 :     --
 -- +------------------+--
@@ -127,15 +124,15 @@ group by idve;
 
 
 CREATE or REPLACE VIEW PRIXVENTE as 
-select idve, idUt idacheteur, max(montant) montant, dateheure
+select idve, idUt idacheteur, max(montant) montant
 from VENTE natural join ENCHERIR natural join UTILISATEUR 
 where idst=4
 group by idve;
 
 
 select MONTH(dateheure) mois, YEAR(dateheure) annee, round(sum(montant*0.05),2) ca
-from PRIXVENTE
-group by MONTH(dateheure), YEAR(dateheure);
+from PRIXVENTE natural join ENCHERIR
+group by YEAR(dateheure), MONTH(dateheure);
 
 
 
@@ -178,15 +175,21 @@ limit 1;
 
 
 select idCat, nomCat, count(idOb) nb_objets
-from CATEGORIE natural join OBJET
-group by idCat;
+from CATEGORIE natural join OBJET natural join VENTE
+where YEAR(finVe) = 2022 and idSt = 4
+group by idCat
+INTO OUTFILE './csv/test.csv'
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
 
 
 -- +------------------+--
 -- * Question 9 :     --
 -- +------------------+--
 -- Ecrire une requête qui renvoie les informations suivantes:
---  Le top des vendeurs
+--  Le top des vendeurs le premier mois de 2023
 
 -- Voici le début de ce que vous devez obtenir.
 -- ATTENTION à l'ordre des colonnes et leur nom!
@@ -197,7 +200,17 @@ group by idCat;
 -- = Reponse question 9.
 
 
-select idUt, pseudout, sum(montant) total
-from UTILISATEUR natural join OBJET natural join VENTE natural join ENCHERIR
-where idst=4
-group by idUt;
+SELECT u.idUt, u.pseudout, SUM(pv.montant) montant
+FROM PRIXVENTE pv 
+JOIN VENTE v ON pv.idve = v. idve
+JOIN OBJET o ON v.idob = o. idob
+JOIN UTILISATEUR u ON o.idut = u. idut
+WHERE MONTH(finVe) = 01 and YEAR(finVe) = 2023
+GROUP BY u. idut
+ORDER BY montant DESC
+LIMIT 10;
+INTO OUTFILE './vendeurs.csv'
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
