@@ -9,6 +9,8 @@ varX = mean((V-moyV).*(V-moyV))
 moyE = mean(E)
 varE = mean((E-moyE).*(E-moyE))
 
+
+
 disp(varX)
 disp(varE)
 

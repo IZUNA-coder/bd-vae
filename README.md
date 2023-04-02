@@ -10,7 +10,7 @@ L'objectif de ce projet était d'expoloiter la base de données de l'application
 ## Contenu du Zip
 
 - `README.md` : ce fichier
-- `requete.sql` : Les réquetes pour la vente de l'objet volé correspondant à la partie 3 ainsi que le jeu d'insertions pour la partie 4
+- `requete.sql` : Les réquetes pour la vente de l'objet volé correspondant à la partie 3 ainsi que le jeu d'insertions pour la partie 4. Ainsi que des requetes pour la partie 7.
 - `SAE2_04.sql` : Fichier de requete SQL pour la partie 5
 - `Dossier CSV` : Tous les fichiers CSV ainsi que les graphique pour la partie 6
 - `Dossier Partie Math Stats` : Dossier avec les dichiers permmettant de répondre à la partie 7. Contenant le raport de la partie analyse de données.
