@@ -178,11 +178,10 @@ select idCat, nomCat, count(idOb) nb_objets
 from CATEGORIE natural join OBJET natural join VENTE
 where YEAR(finVe) = 2022 and idSt = 4
 group by idCat
-INTO OUTFILE './csv/test.csv'
+INTO OUTFILE './ObjetsVendu.csv'
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
-
 
 
 -- +------------------+--

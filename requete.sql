@@ -56,7 +56,12 @@ insert into VENTE(idVe,prixBase,prixMin,debutVe,finVe,idSt,idOb) values
 select MONTH(finVe) mois, count(idve) nb
 from VENTE
 where YEAR(finVe) = 2022 and idSt = 4
-group by MONTH(debutVe);
+group by MONTH(debutVe)
+order by nb;
+INTO OUTFILE './ventes.csv'
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
 
 
 /* Extraire le nombre d’enchèeres de 2022 par mois */
@@ -64,4 +69,8 @@ group by MONTH(debutVe);
 select MONTH(dateheure) mois, count(idve) nb
 from ENCHERIR
 where YEAR(dateheure) = 2022
-group by MONTH(dateheure);
+group by MONTH(dateheure)
+INTO OUTFILE './encheres.csv'
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
