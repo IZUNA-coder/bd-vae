@@ -66,3 +66,5 @@ select MONTH(dateheure) mois, count(idve) nb
 from ENCHERIR
 where YEAR(dateheure) = 2022
 group by MONTH(dateheure);
+
+

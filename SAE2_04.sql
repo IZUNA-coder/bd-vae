@@ -177,12 +177,7 @@ limit 1;
 select idCat, nomCat, count(idOb) nb_objets
 from CATEGORIE natural join OBJET natural join VENTE
 where YEAR(finVe) = 2022 and idSt = 4
-group by idCat
-INTO OUTFILE './ObjetsVendu.csv'
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
-
+group by idCat;
 
 -- +------------------+--
 -- * Question 9 :     --
@@ -204,12 +199,7 @@ FROM PRIXVENTE pv
 JOIN VENTE v ON pv.idve = v. idve
 JOIN OBJET o ON v.idob = o. idob
 JOIN UTILISATEUR u ON o.idut = u. idut
-WHERE MONTH(finVe) = 01 and YEAR(finVe) = 2023
+WHERE MONTH(finVe) = 1 and YEAR(finVe) = 2023
 GROUP BY u. idut
 ORDER BY montant DESC
 LIMIT 10;
-INTO OUTFILE './vendeurs.csv'
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n';
-
